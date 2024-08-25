@@ -37,6 +37,10 @@ function deleteTask() {
     justify-content: space-between;
 }
 
+.task strike {
+    flex-grow: 1;
+    text-align: left;
+}
 .task span {
     flex-grow: 1;
     text-align: left;

@@ -22,7 +22,6 @@ function filterBySearch(search) {
 function filterByStatus(status) {
     emit('filterByStatus', status)
 }
-
 function filterByCategory(filters) {
     emit('filterByCategory', filters)
 }

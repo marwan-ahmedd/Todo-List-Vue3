@@ -1,9 +1,9 @@
 <template>
   <div class="container">
       <FilterTasks :status="status" @filterBySearch="filterBySearch" @filterByStatus="filterByStatus" @filterByCategory="filterByCategory" />
-     <!-- <button class="fas fa-plus" @click="toggleTaskForm" ></button> -->
+      <Tasks :filteredValues="filterValues" /> 
+     <button class="add-task" @click="toggleTaskForm"><i class="fas fa-plus"></i></button>
      <!-- <TaskForm v-show="showTaskForm" /> -->
-     <Tasks :filteredValues="filterValues" /> 
   </div>
 </template>
 
@@ -60,5 +60,17 @@ body {
   max-width: 480px;
   margin: 0 auto;
   padding: 0 15px;
+}
+.add-task {
+  float: right;
+  color: white;
+  background-color: #635BFF;
+  border: 7px solid #635BFF;
+  border-radius: 50%;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
 }
 </style>

@@ -3,14 +3,14 @@
       <FilterTasks :status="status" @filterBySearch="filterBySearch" @filterByStatus="filterByStatus" @filterByCategory="filterByCategory" />
       <Tasks :filteredValues="filterValues" /> 
      <button class="add-task" @click="toggleTaskForm"><i class="fas fa-plus"></i></button>
-     <!-- <TaskForm v-show="showTaskForm" /> -->
+     <TaskForm v-show="showTaskForm" />
   </div>
 </template>
 
 <script setup>
 import Tasks from './components/Tasks.vue'
 import FilterTasks from './components/filters/FilterTasks.vue'
-// import TaskForm from './components/TaskForm.vue'
+import TaskForm from './components/TaskForm.vue'
 
 import { ref } from 'vue'
 
@@ -30,7 +30,7 @@ function filterByCategory(filteredCategory) {
 
 function toggleTaskForm() {
   showTaskForm.value = !showTaskForm.value
-  console.log(showTaskForm.value)
+  // console.log(showTaskForm.value)
 }
 </script>
 

@@ -1,7 +1,6 @@
 <template>
     <div class="tasksList">
-        
-        <div :key="task" v-for="task in filteredTasks">
+        <div :key="task.id" v-for="task in filteredTasks">
             <Task :task="task" @deleteTask="deleteTask" />
         </div>
     </div>
@@ -70,8 +69,7 @@ watch(() => Object.values(props?.filteredValues), () => {
 
 function deleteTask(id) {
   console.log('delete', id)
-  tasksList.value = tasksList.value.filter((task) => task.id != id)
-  console.log(tasksList.value)
+  filteredTasks.value = filteredTasks.value.filter((task) => task.id !== id)
 }
 </script>
 

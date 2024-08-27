@@ -13,6 +13,7 @@
 
 <script setup>
 import { ref } from 'vue'
+const emit = defineEmits(['deleteTask'])
 
 const isHovered = ref(false)
 const props = defineProps({
@@ -22,7 +23,7 @@ function editTask() {
     console.log('edit task', props.task.name)
 }
 function deleteTask() {
-    console.log('delete task', props.task.name)
+    emit('deleteTask', props.task.id)
 }
 </script>
 

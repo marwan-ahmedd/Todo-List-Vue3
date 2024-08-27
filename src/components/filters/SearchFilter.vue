@@ -1,5 +1,5 @@
 <template>
-    <input type="text" value="Search note..." v-model="searchContent" @input="filterBySearch" />
+    <input type="text" v-model="searchContent" @input="filterBySearch" />
 </template>
 
 

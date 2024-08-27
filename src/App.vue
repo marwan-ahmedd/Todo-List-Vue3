@@ -1,22 +1,69 @@
 <template>
   <div class="container">
-      <FilterTasks :status="status" @filterBySearch="filterBySearch" @filterByStatus="filterByStatus" @filterByCategory="filterByCategory" />
-      <Tasks :filteredValues="filterValues" /> 
-     <button class="add-task" @click="toggleTaskForm"><i class="fas fa-plus"></i></button>
-     <TaskForm v-show="showTaskForm" />
+      <FilterTasks 
+        :status="status" 
+        @filterBySearch="filterBySearch" 
+        @filterByStatus="filterByStatus" 
+        @filterByCategory="filterByCategory" />
+
+      <Tasks 
+        :tasks="tasks"  
+        :filteredValues="filterValues"
+        @editTask="editTask"
+        @deleteTask="deleteTask" /> 
+     <button class="add-task" @click="showTaskForm = true"><i class="fas fa-plus"></i></button>
+
+     <TaskForm 
+      v-if="showTaskForm"
+      :task="selectedTask"
+      :categories="categories"
+      @close="close"
+      @addTask="addTask" />
   </div>
 </template>
 
 <script setup>
+import { ref } from 'vue'
 import Tasks from './components/Tasks.vue'
 import FilterTasks from './components/filters/FilterTasks.vue'
 import TaskForm from './components/TaskForm.vue'
 
-import { ref } from 'vue'
 
 const filterValues = ref({})
 const showTaskForm = ref(false);
 const status = ref(['Completed', 'Uncompleted'])
+const categories = ref(['Work', 'Personal', 'Others'])
+const selectedTask = ref(null)
+const tasks = ref([
+  {
+    id: 1, 
+    name: 'Vacation Planning',
+    completed: false,
+    date: '',
+    category: ''
+  },
+  {
+    id: 2,
+    name: 'Cook Dinner',
+    completed: false,
+    date: '',
+    category: ''
+  },
+  {
+    id: 3,
+    name: 'Finish Math Assignment',
+    completed: false,
+    date: '',
+    category: ''
+  },
+  {
+    id: 4,
+    name: 'Read a book',
+    completed: false,
+    date: '',
+    category: ''
+  }
+])  
 
 function filterBySearch(filteredSearch) {
   filterValues.value = { ...filterValues.value, search: filteredSearch }
@@ -27,10 +74,21 @@ function filterByStatus(filteredStatus) {
 function filterByCategory(filteredCategory) {
   filterValues.value = { ...filterValues.value, category: filteredCategory }
 }
-
-function toggleTaskForm() {
+function addTask(task) {
+  console.log("pushing now", task)
+  tasks.value.push(task)
+  console.log(tasks.value)
+}
+function editTask(task) {
+  selectedTask.value = task
+  showTaskForm.value = true;``
+}
+function deleteTask(id) {
+  tasks.value = tasks.value.filter(task => task.id !== id)
+}
+function close() {
   showTaskForm.value = !showTaskForm.value
-  // console.log(showTaskForm.value)
+  selectedTask.value = null
 }
 </script>
 

@@ -1,7 +1,7 @@
 <template>
     <div class="tasksList">
-        <div :key="task.id" v-for="task in filteredTasks">
-            <Task :task="task" @deleteTask="deleteTask" />
+        <div :key="task.id" v-for="task in props.tasks">
+            <Task :task="task" @deleteTask="deleteTask" @editTask="editTask" />
         </div>
     </div>
 </template>
@@ -10,66 +10,37 @@
 import { ref, watch } from 'vue'
 import Task from './Task.vue'
 
+const emit = defineEmits(['editTask'])
 const props = defineProps({
-    filteredValues: Object
+    tasks: Array,
+    filteredValues: Object,
 })
 
 
-const tasksList = ref([
-  {
-    id: 1, 
-    name: 'Vacation Planning',
-    completed: false,
-    date: '',
-    category: ''
-  },
-  {
-    id: 2,
-    name: 'Cook Dinner',
-    completed: false,
-    date: '',
-    category: ''
-  },
-  {
-    id: 3,
-    name: 'Finish Math Assignment',
-    completed: false,
-    date: '',
-    category: ''
-  },
-  {
-    id: 4,
-    name: 'Read a book',
-    completed: false,
-    date: '',
-    category: ''
-  }
-])
-
-const filteredTasks = ref(Array.from(tasksList.value));
-
 function filterSearch() {
     const searchValues = props?.filteredValues?.search;
-    filteredTasks.value = tasksList?.value?.filter((task) => 
+    props.tasks = props.tasks?.filter((task) => 
         task.name?.toLowerCase().includes(searchValues.toLowerCase())
     )
 }
 function filterStatus() {
   const statusValues = props?.filteredValues?.status;
   statusValues = statusValues.toLowerCase()
-  filteredValues.value = tasksList?.value?.filter((task) => 
+  filteredValues.value = props.tasks?.filter((task) => 
       statusValues == 'all' || (task.completed == true && statusValues == 'completed') || (task.completed == false && statusValues == 'uncompleted')
   )
 }
-// console.log(props.filteredValues);
 watch(() => Object.values(props?.filteredValues), () => {
     filterSearch()
     // filterStatus()
 })
 
 function deleteTask(id) {
-  console.log('delete', id)
-  filteredTasks.value = filteredTasks.value.filter((task) => task.id !== id)
+  // console.log('delete', id)
+  emit('deleteTask', id)
+}
+function editTask(task) {
+  emit('editTask', task)
 }
 </script>
 

@@ -3,7 +3,7 @@
         <input type="checkbox" v-model="task.completed" />
         <strike v-if="task.completed"> {{ task.name }}</strike>
         <span v-else>{{ task.name }}</span>
-        {{ task.date }}
+        <!-- {{ task.date }} -->
         <div v-if="isHovered" class="actions">
             <button @click="editTask"><i class="fas fa-edit"></i></button>
             <button @click="deleteTask"><i class="fas fa-trash-alt"></i></button>
@@ -13,14 +13,15 @@
 
 <script setup>
 import { ref } from 'vue'
-const emit = defineEmits(['deleteTask'])
+const emit = defineEmits(['editTask', 'deleteTask'])
 
 const isHovered = ref(false)
 const props = defineProps({
     task: Object,
 })
 function editTask() {
-    console.log('edit task', props.task.name)
+    emit('editTask', props.task)
+    // console.log('edit', props.task)
 }
 function deleteTask() {
     emit('deleteTask', props.task.id)

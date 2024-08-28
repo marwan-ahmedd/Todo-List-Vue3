@@ -25,7 +25,6 @@ function filterStatus() {
 }
 
 function deleteTask(id) {
-  // console.log('delete', id)
   emit('deleteTask', id)
 }
 function editTask(task) {

@@ -1,17 +1,16 @@
 <template>
-    <div class="task" @mouseover="isHovered = true" @mouseleave="isHovered = false">
+    <div class="task">
         <div class="task-details" >
             <input type="checkbox" v-model="task.completed" />
-            <strike v-if="task.completed"> {{ task.name }}</strike>
+            <span class="strick" v-if="task.completed"> {{ task.name }}</span>
             <span v-else>{{ task.name }}</span>
             
-            <!-- {{ task.date }} -->
-            <span class="category">{{ props.task.category }}</span>
         </div>
-        <div v-if="isHovered" class="actions">
+        <div class="actions">
             <button @click="editTask"><i class="fas fa-edit"></i></button>
             <button @click="deleteTask"><i class="fas fa-trash-alt"></i></button>
         </div>
+        <span class="category">{{ props.task.category }}</span>
     </div>
 </template>
 
@@ -25,14 +24,13 @@ const props = defineProps({
 })
 function editTask() {
     emit('editTask', props.task)
-    // console.log('edit', props.task)
 }
 function deleteTask() {
     emit('deleteTask', props.task.id)
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .task {
     display: flex;
     padding: 10px;
@@ -40,6 +38,12 @@ function deleteTask() {
     border-radius: 5px;
     margin-bottom: 10px;
     justify-content: space-between;
+}
+
+.task:hover {
+    .actions {
+        display: inline-block;
+    }
 }
 .task-details {
     /* align-items: center; */
@@ -56,8 +60,13 @@ function deleteTask() {
     margin-left: 10px;
 }
 .actions {
-    display: flex;
+    display: none;
+    width: 50px;
+
     gap: 10px;
+}
+.strick{
+    text-decoration: line-through;
 }
 input {
     margin-right: 7px;

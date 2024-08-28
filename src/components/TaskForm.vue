@@ -35,6 +35,7 @@ onMounted(() => {
         console.log(formObj.value)
     }
 })
+const curID = ref(0)
 const formObj = ref({
     id: Math.floor(Math.random() * 1000),
     name: '',
@@ -46,7 +47,7 @@ function close() {
     emit('close')
 }
 function confirmForm() {
-    if (formObj.value.name && formObj.value.category) {
+    if (!props.task && formObj.value.name && formObj.value.category) {
         emit('addTask', formObj.value)
         formObj.value = {
             name: '',
@@ -54,8 +55,11 @@ function confirmForm() {
             completed: false,
             id: Math.floor(Math.random() * 1000),
         }
-        close()
     }
+    if (props.task) {
+        emit('editTask', formObj.value)
+    }
+    close()
 }
 </script>
 

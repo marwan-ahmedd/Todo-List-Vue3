@@ -8,7 +8,7 @@
 
       <Tasks 
         :tasks="tasks"  
-        @editTask="editTask"
+        @editTask="toggleTaskForm"
         @deleteTask="deleteTask" /> 
      <button class="add-task" @click="showTaskForm = true"><i class="fas fa-plus"></i></button>
 
@@ -17,7 +17,8 @@
       :task="selectedTask"
       :categories="categories"
       @close="close"
-      @addTask="addTask" />
+      @addTask="addTask"
+      @editTask="editTask" />
   </div>
 </template>
 
@@ -64,6 +65,10 @@ const tasks = ref([
   }
 ])  
 
+function toggleTaskForm(task) {
+  selectedTask.value = task
+  showTaskForm.value = true
+}
 function filterBySearch(searchValues) {
     tasks.value = tasks.value.filter((task) => 
         task.name?.toLowerCase().includes(searchValues?.toLowerCase())
@@ -76,13 +81,16 @@ function filterByCategory(filteredCategory) {
   filterValues.value = { ...filterValues.value, category: filteredCategory }
 }
 function addTask(task) {
-  console.log("pushing now", task)
   tasks.value.push(task)
-  console.log(tasks.value)
 }
 function editTask(task) {
-  selectedTask.value = task
-  showTaskForm.value = true;``
+  tasks.value = tasks.value.map((t) => {
+    if (t.id === task.id) {
+      return task
+    }
+    return t
+  })
+  
 }
 function deleteTask(id) {
   tasks.value = tasks.value.filter(task => task.id !== id)

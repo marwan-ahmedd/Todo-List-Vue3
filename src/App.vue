@@ -7,7 +7,7 @@
         @filterByCategory="filterByCategory" />
 
       <Tasks 
-        :tasks="tasks"  
+        :tasks="tasks"
         @editTask="toggleTaskForm"
         @deleteTask="deleteTask" /> 
      <button class="add-task" @click="showTaskForm = true"><i class="fas fa-plus"></i></button>
@@ -16,14 +16,14 @@
       v-if="showTaskForm"
       :task="selectedTask"
       :categories="categories"
-      @close="close"
       @addTask="addTask"
-      @editTask="editTask" />
+      @editTask="editTask"
+      @close="close" />
   </div>
 </template>
 
 <script setup>
-import { ref, watch } from 'vue'
+import { ref } from 'vue'
 import Tasks from './components/Tasks.vue'
 import FilterTasks from './components/filters/FilterTasks.vue'
 import TaskForm from './components/TaskForm.vue'
@@ -69,8 +69,11 @@ function toggleTaskForm(task) {
   selectedTask.value = task
   showTaskForm.value = true
 }
+
+const filteredTasks = ref(Array.from(tasks.value))
 function filterBySearch(searchValues) {
-    tasks.value = tasks.value.filter((task) => 
+
+  filteredTasks.value = tasks.value.filter((task) => 
         task.name?.toLowerCase().includes(searchValues?.toLowerCase())
     )
 }
@@ -93,7 +96,21 @@ function editTask(task) {
   
 }
 function deleteTask(id) {
-  tasks.value = tasks.value.filter(task => task.id !== id)
+  let l = 0
+  let r = tasks.value.length - 1
+
+  while (l <= r) {
+    let mid = Math.floor(l + (r - l) / 2)
+    if (tasks.value[mid].id == id) {
+      tasks.value.splice(mid, 1)
+      break
+    }
+    if (tasks.value[mid].id < id) {
+      l = mid + 1
+    } else {
+      r = mid - 1
+    }
+  }
 }
 function close() {
   showTaskForm.value = !showTaskForm.value

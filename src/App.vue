@@ -7,7 +7,7 @@
         @filterByCategory="filterByCategory" />
 
       <Tasks 
-        :tasks="tasks"
+        :tasks="applyFilter ? filteredTasks : tasks"
         @editTask="toggleTaskForm"
         @deleteTask="deleteTask" /> 
      <button class="add-task" @click="showTaskForm = true"><i class="fas fa-plus"></i></button>
@@ -34,6 +34,8 @@ const showTaskForm = ref(false);
 const status = ref(['Completed', 'Uncompleted'])
 const categories = ref(['Work', 'Personal', 'Others'])
 const selectedTask = ref(null)
+const applyFilter = ref(false)
+
 const tasks = ref([
   {
     id: 1, 
@@ -76,8 +78,10 @@ function filterBySearch(searchValues) {
   filteredTasks.value = tasks.value.filter((task) => 
         task.name?.toLowerCase().includes(searchValues?.toLowerCase())
     )
+  applyFilter.value = true
 }
 function filterByStatus(filteredStatus) {
+  console.log("filter status", filteredStatus)
   filterValues.value = { ...filterValues.value, status: filteredStatus }
 }
 function filterByCategory(filteredCategory) {

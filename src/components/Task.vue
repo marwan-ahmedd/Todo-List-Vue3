@@ -42,18 +42,18 @@ function deleteTask() {
     justify-content: space-between;
 }
 .task-details {
-    align-items: center;
-    /* text-align: center; */
+    /* align-items: center; */
+    /* align-content: center; */
+    /* display: flex; */
 }
 .category {
     width:fit-content;
-    display: flex;
-    text-align: center;
     border: 1px solid #635BFF;
     border-radius: 20px;
     background-color: #635BFF;
     color: white;
     padding: 3px 10px;
+    margin-left: 10px;
 }
 .actions {
     display: flex;

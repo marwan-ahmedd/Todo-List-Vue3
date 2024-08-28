@@ -1,7 +1,7 @@
 <template>
   <select v-model="selectedStatus" @change="filterByStatus" class="custom-dropdown">
-      <option value="all" selected>All</option>
-      <option v-for="status in props.status" :key="status" :value="status">
+      <option selected value="all">All</option>
+      <option v-for="status in props.status" :key="status" :value="status.toLowerCase()">
           {{ status }}
       </option>
   </select>
@@ -14,9 +14,10 @@ const emit = defineEmits(['filterByStatus'])
 const props = defineProps({
     status: Array,
 })
-const selectedStatus = ref([])
+const selectedStatus = ref('')
 
 function filterByStatus() {
+  // console.log(selectedStatus.value)
     emit('filterByStatus', selectedStatus.value.toLowerCase())
 }
 

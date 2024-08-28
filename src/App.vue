@@ -8,7 +8,6 @@
 
       <Tasks 
         :tasks="tasks"  
-        :filteredValues="filterValues"
         @editTask="editTask"
         @deleteTask="deleteTask" /> 
      <button class="add-task" @click="showTaskForm = true"><i class="fas fa-plus"></i></button>
@@ -23,7 +22,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import Tasks from './components/Tasks.vue'
 import FilterTasks from './components/filters/FilterTasks.vue'
 import TaskForm from './components/TaskForm.vue'
@@ -40,33 +39,35 @@ const tasks = ref([
     name: 'Vacation Planning',
     completed: false,
     date: '',
-    category: ''
+    category: 'Work'
   },
   {
     id: 2,
     name: 'Cook Dinner',
     completed: false,
     date: '',
-    category: ''
+    category: 'Personal'
   },
   {
     id: 3,
     name: 'Finish Math Assignment',
     completed: false,
     date: '',
-    category: ''
+    category: 'Work'
   },
   {
     id: 4,
     name: 'Read a book',
     completed: false,
     date: '',
-    category: ''
+    category: 'Others'
   }
 ])  
 
-function filterBySearch(filteredSearch) {
-  filterValues.value = { ...filterValues.value, search: filteredSearch }
+function filterBySearch(searchValues) {
+    tasks.value = tasks.value.filter((task) => 
+        task.name?.toLowerCase().includes(searchValues?.toLowerCase())
+    )
 }
 function filterByStatus(filteredStatus) {
   filterValues.value = { ...filterValues.value, status: filteredStatus }

@@ -5,6 +5,7 @@
                 <p>Name <input type="text" v-model="formObj.name"></p>
                 <p>Category
                     <select v-model="formObj.category">
+                        <option>{{ formObj.category }}</option>
                         <option v-for="category in props.categories" :key="category" :value="category.toLowerCase()">
                             {{ category }}
                         </option>

@@ -13,16 +13,9 @@ import Task from './Task.vue'
 const emit = defineEmits(['editTask'])
 const props = defineProps({
     tasks: Array,
-    filteredValues: Object,
 })
 
 
-function filterSearch() {
-    const searchValues = props?.filteredValues?.search;
-    props.tasks = props.tasks?.filter((task) => 
-        task.name?.toLowerCase().includes(searchValues.toLowerCase())
-    )
-}
 function filterStatus() {
   const statusValues = props?.filteredValues?.status;
   statusValues = statusValues.toLowerCase()
@@ -30,10 +23,6 @@ function filterStatus() {
       statusValues == 'all' || (task.completed == true && statusValues == 'completed') || (task.completed == false && statusValues == 'uncompleted')
   )
 }
-watch(() => Object.values(props?.filteredValues), () => {
-    filterSearch()
-    // filterStatus()
-})
 
 function deleteTask(id) {
   // console.log('delete', id)

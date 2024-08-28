@@ -1,9 +1,13 @@
 <template>
     <div class="task" @mouseover="isHovered = true" @mouseleave="isHovered = false">
-        <input type="checkbox" v-model="task.completed" />
-        <strike v-if="task.completed"> {{ task.name }}</strike>
-        <span v-else>{{ task.name }}</span>
-        <!-- {{ task.date }} -->
+        <div class="task-details" >
+            <input type="checkbox" v-model="task.completed" />
+            <strike v-if="task.completed"> {{ task.name }}</strike>
+            <span v-else>{{ task.name }}</span>
+            
+            <!-- {{ task.date }} -->
+            <span class="category">{{ props.task.category }}</span>
+        </div>
         <div v-if="isHovered" class="actions">
             <button @click="editTask"><i class="fas fa-edit"></i></button>
             <button @click="deleteTask"><i class="fas fa-trash-alt"></i></button>
@@ -31,21 +35,25 @@ function deleteTask() {
 <style scoped>
 .task {
     display: flex;
-    align-items: left;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
     margin-bottom: 10px;
     justify-content: space-between;
 }
-
-.task strike {
-    flex-grow: 1;
-    text-align: left;
+.task-details {
+    align-items: center;
+    /* text-align: center; */
 }
-.task span {
-    flex-grow: 1;
-    text-align: left;
+.category {
+    width:fit-content;
+    display: flex;
+    text-align: center;
+    border: 1px solid #635BFF;
+    border-radius: 20px;
+    background-color: #635BFF;
+    color: white;
+    padding: 3px 10px;
 }
 .actions {
     display: flex;
